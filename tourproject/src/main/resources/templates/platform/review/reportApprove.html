@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{platform/layout/default}">
+
+<th:block layout:fragment="customCss">
+<style>
+
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        select {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        select {
+            width: calc(100% - 22px); /* 드롭다운 메뉴의 너비를 조정 */
+            padding-right: 30px; /* 오른쪽 패딩 추가하여 드롭다운 화살표 공간 확보 */
+            text-align: center; /* 드롭다운 메뉴 내부 텍스트 가운데 정렬 */
+        }
+
+        button[type="submit"],
+        button[type="reset"] {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button[type="submit"]:hover,
+        button[type="reset"]:hover {
+            background-color: #45a049;
+        }
+            tfoot {
+        display: table-row-group; /* 버튼 행을 테이블 행 그룹으로 설정 */
+    }
+
+    tfoot td {
+        text-align: right; /* 버튼을 행의 오른쪽으로 정렬 */
+    }
+</style>
+</th:block>
+<th:block layout:fragment="customContent">
+    <h1>리뷰 신고 승인</h1>
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>
+					상품 리뷰 신고 승인<small>Users</small>
+				</h2>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<p class="text-muted font-13 m-b-30"> 승인 여부를 선택해주세요
+	<form id="modifyForm" th:action="@{/platform/review/report/approve}" method="post">
+			<table th:object="${reportInfo}">
+		        <tbody>
+		            <tr>
+		                <td>
+		                    <label for="reportCode">신고 번호</label>
+		                </td>
+		                <td>
+		                    <input type="text" id="reportCode" name="reportCode" th:value="*{reportCode}" readonly="readonly" />
+		                </td>
+		            </tr>
+		            <tr>
+		                <td>
+		                    <label for="reportId">신고자 아이디</label>
+		                </td>
+		                <td>
+		                    <input type="text" id="reportId" name="reportId" th:value="*{reportId}" readonly="readonly"/>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td>
+		                    <label for="reportCategories">신고 카테고리</label>
+		                </td>
+		                <td>
+		                    <input type="text" id="reportCategories" name="reportCategories" th:value="*{reportCategories}" readonly="readonly"/>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td>
+		                    <label for="reportReviewCode">신고 리뷰 코드</label>
+		                </td>
+		                <td>
+		                    <input type="text" id="reportReviewCode" name="reportReviewCode" th:value="*{reportReviewCode}" readonly="readonly"/>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td>
+		                    <label for="reportContent">신고 내용</label>
+		                </td>
+		                <td>
+		                    <input type="text" id="reportContent" name="reportContent" th:value="*{reportContent}" readonly="readonly"/>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td>
+		                    <label for="reportDate">신고 일자</label>
+		                </td>
+		                <td>
+		                    <input type="text" id="reportDate" name="reportDate" th:value="*{reportDate}" readonly="readonly"/>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td>
+		                    <label for="reportApproveId">신고 승인자</label>
+		                </td>
+		                <td>
+		                    <input type="text" id="reportApproveId" name="reportApproveId" th:value="${session.loginId}" readonly="readonly"/>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td>
+		                    <label for="reportApproveDate">신고 승인 일자</label>
+		                </td>
+		                <td>
+		                    <input type="text" id="reportApproveDate" name="reportApproveDate" th:value="*{reportApproveDate}" readonly="readonly"/>
+		                </td>
+		            </tr>
+		            <tr>
+                <td>
+                    <label for="reportApprove">신고 승인 여부</label>
+                </td>
+                <td>
+                    <select id="reportApprove" name="reportApprove">
+                        <option value="">승인 여부를 선택하세요</option>
+                        <option th:value="Y" th:selected="*{reportApprove == 'Y'}">승인</option>
+                        <option th:value="N" th:selected="*{reportApprove == 'N'}">미승인</option>
+                    </select>
+                </td>
+		            </tr>
+		        </tbody>
+		        <tfoot>
+		            <tr>
+		                <td colspan="2">
+		                    <button type="submit" id="modifyMemberBtn">확인</button>
+		                    <button type="reset" id="resetBtn">취소</button>
+		                </td>
+		            </tr>
+		        </tfoot>    
+		    </table>
+			</form>
+				
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+
+
+</th:block>
+</html>
+

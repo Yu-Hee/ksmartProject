@@ -1,0 +1,144 @@
+@charset "UTF-8";
+
+/* 선 스타일1 */
+.separator1{
+    border-top: 3px solid #ff9b40; /* 굵은 직선 스타일 설정 */
+    margin: 7px 0; /* 위아래 여백 설정 */
+}
+
+/* 선 스타일2 */
+.separator2 {
+    border-top: 1px solid #ffd0a5; /* 굵은 직선 스타일 설정 */
+    margin-bottom: 10px;
+}
+
+/* 선 스타일3 */
+.separator3 {
+    border-top: 3px solid #ffd0a5; /* 굵은 직선 스타일 설정 */
+    margin-bottom: 10px;
+}
+
+.review-content {
+    overflow-wrap: break-word;
+    color: black; /* 텍스트 색상을 검은색으로 설정 */
+    margin-bottom: 20px;
+}
+
+.stars-container {
+    font-size: 24px; /* 별 텍스트의 크기 */
+    color: orange; /* 회색 별 텍스트 색상 */
+    margin-bottom: 5px; /* 아래쪽 여백 설정 */
+}
+
+.yellow-star {
+    color: orange; /* 노란색 별 텍스트 색상 */
+}
+
+.review-id {
+    margin-top: 20px; /* 아이디 텍스트의 아래쪽에 10px 마진 추가 */
+    margin-bottom: 5px;
+    color: black;
+}
+
+.review-date {
+    margin-right: 10px; /* 오른쪽 여백 설정 */
+}
+
+.review-modify-date {
+    margin-left: 10px; /* 왼쪽 여백 설정 */
+}
+
+.like-button {
+    display: block; /* 블록 요소로 설정하여 세로 배치 */
+    width: 120px; /* 기본 너비 설정 */
+    margin-right: 100%; /* 버튼 간격 조절 */
+    margin-bottom: 5px;
+    margin-top: 30px;
+}
+
+.dislike-button {
+    display: block; /* 블록 요소로 설정하여 세로 배치 */
+    width: 120px; /* 기본 너비 설정 */
+    margin-right: 100%; /* 버튼 간격 조절 */
+    margin-bottom: 20px;
+}
+
+.button-text {
+    font-size: 10px !important; /* 원하는 크기로 설정 */
+}
+
+.comment-section {
+    background-color: #F5F5F5; /* 답글 배경 색상 */
+    border-radius: 10px; /* 둥글게 모서리를 주는 CSS 속성 */
+    padding: 10px; /* 상하좌우 여백을 꽉 채우는 CSS 속성 */
+    height: 100%;
+}
+.review {
+    background-color: white; /* 리뷰 배경 색상 */
+    margin: 10px;
+    border-radius: 10px; /* 둥글게 모서리를 주는 CSS 속성 */
+    padding: 10px; /* 상하좌우 여백을 꽉 채우는 CSS 속성 */
+}
+
+.comment-wrapper {
+    display: flex; /* Flexbox 레이아웃 사용 */
+    align-items: center; /* 아이템을 세로로 가운데 정렬 */
+}
+
+/* 답글 아이디 스타일 */
+.comment-id {
+    font-size: 13px; /* 아이디 폰트 크기 */
+}
+
+/* 답글 내용 스타일 */
+.comment-content {
+    font-size: 13px; /* 내용 폰트 크기 */
+    margin-top: 10px;
+}
+
+/* 답글 날짜 스타일 */
+.comment-date {
+	margin-left: 10px; /* 아이디와 날짜 사이 여백 조정 */
+    font-size: 12px; /* 날짜 폰트 크기 */
+    color: #777777; /* 날짜 색상 */
+}
+
+.report-button{
+	/* color: white !important; */
+	margin-bottom: 30px;
+	font-size: 10px !important; /* 버튼의 글씨 크기를 10px로 설정합니다. */
+	margin-left: 90%;
+}
+
+/* 가운데 정렬을 위한 스타일 */
+.center {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.center-cnt{
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+/* 평균 별점 별 모양의 크기를 조절합니다. */
+.rating-stars-avg {
+    font-size: 40px;
+}
+
+/* 평균 별점 텍스트의 크기를 조절합니다. */
+.rating-text {
+    font-size: 24px;
+}
+
+/* 리뷰 개수 텍스트의 크기를 조절합니다. */
+#reviewCount {
+    font-size: 16px;
+}
+
+/* 이미지 슬라이더 아이템의 크기를 조정합니다. */
+#package-slider2 .item img {
+    max-width: 40% !important; /* 이미지의 최대 너비를 부모 요소의 너비에 맞게 조정합니다. */
+    max-height: 30% !important; /* 이미지의 최대 높이를 200px로 제한합니다. */
+    width: auto !important; /* 이미지의 너비를 자동으로 조정합니다. */
+    height: auto !important; /* 이미지의 높이를 자동으로 조정합니다. */
+}

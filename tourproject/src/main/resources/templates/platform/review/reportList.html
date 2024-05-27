@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{platform/layout/default}">
+	<head>
+		<!-- Datatables -->
+	    <link th:href="@{/platform/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css}" rel="stylesheet">
+	    <link th:href="@{/platform/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css}" rel="stylesheet">
+	    <link th:href="@{/platform/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css}" rel="stylesheet">
+	    <link th:href="@{/platform/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}" rel="stylesheet">
+	    <link th:href="@{/platform/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}" rel="stylesheet">
+	
+		<style type="text/css">
+			.control-label{
+				text-align: center !important;
+				background-color: #f8f8f8 !important;
+				padding-bottom: 8px !important;	
+			}
+		</style>
+
+	</head>
+
+	<th:block layout:fragment="customContent">
+		<!-- search start -->
+		<!-- search end -->
+		<!-- grid table start -->
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="x_panel">
+					<div class="x_content">
+						<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th>신고 번호</th>
+									<th>신고자 아이디</th>
+									<th>신고 카테고리</th>
+									<th>신고 리뷰 코드</th>
+									<th>신고 내용</th>
+									<th>신고 일자</th>
+									<th>신고 승인 여부</th>
+									<th>신고 승인자</th>
+									<th>신고 승인 일자</th>
+									<th>승인하기</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:unless="${pReviewReport != null}">
+									<td colspan="9"  class="center-text">신고된 리뷰가 없습니다.</td>
+								</tr>
+								<tr th:if="${pReviewReport != null}" th:each="l : ${pReviewReport}">
+									<td th:text="${l.reportNum}"></td>
+									<td th:text="${l.reportId}"></td>
+									<td th:text="${l.PReviewReportCategoryInfo.reportCategoryType}"></td>
+									<td th:text="${l.reportReviewCode}"></td>
+									<td th:text="${l.reportContent}"></td>
+									<td th:text="${l.reportDate}"></td>
+									<td th:text="${l.reportApproveName}"></td>
+									<td th:text="${l.reportApproveId}"></td>
+									<td th:text="${l.reportApproveDate}"></td>
+									<td>
+										<!-- /* /member/modifyMember?memberId=id001 */ --> 
+										<a th:href="@{/platform/review/report/approve(reportCode=${l.reportCode})}">수정</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- grid table end -->
+	</th:block>
+	<th:block layout:fragment="customJsFile">
+		<!-- Datatables -->
+	    <script th:src="@{/platform/vendors/datatables.net/js/jquery.dataTables.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.flash.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.html5.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.print.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-scroller/js/dataTables.scroller.min.js}"></script>
+	    <script th:src="@{/platform/vendors/jszip/dist/jszip.min.js}"></script>
+	    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
+	    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
+	</th:block>
+</html>

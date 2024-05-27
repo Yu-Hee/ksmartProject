@@ -1,0 +1,81 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout/default}">
+<th:block layout:fragment="customCss">
+    <link rel="stylesheet" th:href="@{/user/css/style.css}">
+    <link rel="stylesheet" th:href="@{/user/css/daterangepicker.css}">
+    <link rel="stylesheet" th:href="@{/user/css/aos.css}">
+    <link rel="stylesheet" th:href="@{/common/css/font/font.css}">
+</th:block>
+
+<th:block layout:fragment="customPageSection">
+    <div class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <div class="intro-wrap">
+                        <h1 class="mb-5">
+                            <span class="d-block">다양한 관광지를</span> 여행해보아요 :
+                            <br><span class="typed-words"></span>
+                        </h1>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="slides">
+                        <img alt="Image" class="img-fluid active"
+                             th:src="@{/user/img/index/hero-slider-1.jpg}">
+                        <img alt="Image" class="img-fluid"
+                             th:src="@{/user/img/index/hero-slider-2.jpg}">
+                        <img alt="Image" class="img-fluid"
+                             th:src="@{/user/img/index/hero-slider-3.jpg}">
+                        <img alt="Image" class="img-fluid"
+                             th:src="@{/user/img/index/hero-slider-4.jpg}">
+                        <img alt="Image" class="img-fluid"
+                             th:src="@{/user/img/index/hero-slider-5.jpg}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+<th:block layout:fragment="customJsFIle">
+    <script th:src="@{/user/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/user/js/aos.js}"></script>
+    <script th:src="@{/user/js/jquery.waypoints.min.js}"></script>
+    <script th:src="@{/user/js/typed.js}"></script>
+    <script th:src="@{/user/js/moment.min.js}"></script>
+    <script th:src="@{/user/js/daterangepicker.js}"></script>
+
+    <script th:src="@{/user/js/custom.js}"></script>
+</th:block>
+<th:block layout:fragment="customJs">
+    <script>
+        $(function () {
+            const slides = $('.slides'),
+                images = slides.find('img');
+
+            images.each(function (i) {
+                $(this).attr('data-id', i + 1);
+            })
+
+            const typed = new Typed('.typed-words', {
+                strings: ["전주 한옥마을.", " 강원도 양양.", " 부산 해운대.", " 경주 불국사.", " 제주도 우도.", "서울 경복궁"],
+                typeSpeed: 80,
+                backSpeed: 80,
+                backDelay: 4000,
+                startDelay: 1000,
+                loop: true,
+                showCursor: true,
+                preStringTyped: (arrayPos, self) => {
+                    arrayPos++;
+                    $('.slides img').removeClass('active');
+                    $('.slides img[data-id="' + arrayPos + '"]').addClass('active');
+                }
+
+            });
+        })
+    </script>
+</th:block>
+</html>

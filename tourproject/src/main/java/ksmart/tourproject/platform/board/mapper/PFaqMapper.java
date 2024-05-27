@@ -1,0 +1,35 @@
+package ksmart.tourproject.platform.board.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.data.repository.query.Param;
+
+import ksmart.tourproject.platform.board.dto.PFaq;
+
+@Mapper
+public interface PFaqMapper {
+	
+	// 자주찾는 질문 조회
+	List<PFaq> getFaqList();
+	
+	// 제목으로 자주찾는 질문 검색
+    List<PFaq> searchFaqByTitle(String title);
+
+    // 
+    PFaq getFaqInfoByNum(String faqNum);
+
+    // 자주찾는 질문 수정
+	int faqModify(PFaq pFaq);
+	
+	
+	// 자주찾는 질문 등록
+	void faqWrite(String faqNum);
+	
+	
+	// 자주찾는 질문 삭제
+	void faqDelete(String faqNum);
+
+	
+    
+}
