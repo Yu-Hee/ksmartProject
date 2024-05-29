@@ -100,11 +100,6 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>2.1.0</version>
         </dependency>
-        <dependency>
-        	<groupId>ksmart</groupId>
-        	<artifactId>ks50team01</artifactId>
-        	<version>0.0.1-SNAPSHOT</version>
-        </dependency>
 	</dependencies>
 
 	<build>

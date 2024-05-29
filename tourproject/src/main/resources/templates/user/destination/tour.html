@@ -6,14 +6,17 @@
 </head>
 <body>
     <h1>Tour Data</h1>
-    <div>
+    <div th:each="tourItem : ${tourItems}">
         <p>주소: <span th:text="${tourItem.addr1}"></span> <span th:text="${tourItem.addr2}"></span></p>
         <p>전화번호: <span th:text="${tourItem.tel}"></span></p>
         <p>지역 코드: <span th:text="${tourItem.areacode}"></span></p>
         <p>카테고리: <span th:text="${tourItem.cat1}"></span> <span th:text="${tourItem.cat2}"></span> <span th:text="${tourItem.cat3}"></span></p>
         <p>콘텐츠 ID: <span th:text="${tourItem.contentid}"></span></p>
         <p>콘텐츠 타입 ID: <span th:text="${tourItem.contenttypeid}"></span></p>
-        <!-- 추가적인 필드들도 동일한 방식으로 출력 -->
+        <p>타이틀: <span th:text="${tourItem.title}"></span></p>
+        <p>대표 이미지: <img th:src="${tourItem.firstimage}" alt="대표 이미지"></p>
+        <p>대표 썸네일 이미지: <img th:src="${tourItem.firstimage2}" alt="대표 썸네일 이미지"></p>
+        <hr/>
     </div>
 </body>
 </html>

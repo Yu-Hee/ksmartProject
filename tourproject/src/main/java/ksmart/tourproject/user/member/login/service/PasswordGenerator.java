@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 public class PasswordGenerator {
+	/*
     private static final String CHAR_POOL = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final int PASSWORD_LENGTH = 8;
 
@@ -32,4 +33,5 @@ public class PasswordGenerator {
         String randomPassword = generateRandomPassword();
         System.out.println("Random Password: " + randomPassword);
     }
+    */
 }

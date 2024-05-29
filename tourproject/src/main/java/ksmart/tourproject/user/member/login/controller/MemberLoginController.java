@@ -29,6 +29,7 @@ public class MemberLoginController {
 
 	private final LoginService loginService;
 	
+	/*
 	@PostMapping("/findPw")
 	public RedirectView findPassword(@RequestParam("id") String id, @RequestParam("email") String email, RedirectAttributes redirectAttributes, HttpServletRequest request) throws MessagingException {
 	    boolean isValidUser = loginService.findPasswordByIdAndEmail(id, email);
@@ -42,7 +43,7 @@ public class MemberLoginController {
 	    String referer = request.getHeader("Referer");
 	    return new RedirectView(referer);
 	}
-	
+	*/
 	@PostMapping("/bsnsJoin")
 	public RedirectView bsnsJoinMember(Login login, RedirectAttributes redirectAttributes, HttpServletRequest request) {
 	    try {
