@@ -86,29 +86,30 @@ public class ApiTourController {
         String serviceKey = "HmjxL3ZwIR9BRISocvJb3ajCyCPzKPzt64QVyJUExpNDFEoSd96yRhkcF6ln23pFPYTSP3v15n23f092lrVAmg=="; // 실제 서비스 키를 입력하세요
         int numOfRows = 100; // 한 페이지당 가져올 항목 수
         int startPage = 1; // 시작 페이지 번호
-        String urlStr = "http://apis.data.go.kr/B551011/KorService1/detailCommon1" +
-                        "?serviceKey=" + serviceKey +
-		                "&MobileOS=ETC" +
-		                "&MobileApp=AppTest" +
-		                "&_type=json" +
-		                "&listYN=Y" +
-		                "&arrange=O" +
-		                "&contentId=2465071" + // 콘텐츠 ID 조회 여부
-		                "&contentTypeId=Y" + // 관광타입 ID 조회 여부
-		                "&defaultYN=Y" + // 기본정보 조회 여부
-		                "&firstImageYN=Y" + // 대표이미지 조회 여부
-		                "&areacodeYN=Y" + // 지역코드 조회 여부
-		                "&catcodeYN=Y" + // 서비스분류코드 조회 여부
-		                "&addrinfoYN=Y" + // 주소 조회 여부
-		                "&mapinfoYN=Y" + // 좌표 조회 여부
-		                "&overviewYN=Y"; // 개요 조회 여부
+        String urlStr = "https://apis.data.go.kr/B551011/KorService1/detailCommon1" +
+                "?serviceKey=" + serviceKey +
+                "&MobileOS=ETC" +
+                "&MobileApp=test" +
+                "&_type=json" +
+                "&contentId=1865597" + // 콘텐츠 ID
+                "&defaultYN=Y" + // 기본정보 조회 여부
+                "&firstImageYN=Y" + // 대표이미지 조회 여부
+                "&areacodeYN=Y" + // 지역코드 조회 여부
+                "&catcodeYN=Y" + // 서비스분류코드 조회 여부
+                "&addrinfoYN=Y" + // 주소 조회 여부
+                "&mapinfoYN=Y" + // 좌표 조회 여부
+                "&overviewYN=Y"; // 개요 조회 여부
         
         try {
             URL url = new URL(urlStr);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
-            
+
+            System.out.println("Requesting URL: " + urlStr); // 요청 URL 로그
+
             int responseCode = urlConnection.getResponseCode();
+            System.out.println("Response Code: " + responseCode); // 응답 코드 로그
+
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
                     String returnLine;
@@ -116,6 +117,7 @@ public class ApiTourController {
                         result.append(returnLine).append("\n");
                     }
                 }
+                System.out.println("API Response: " + result.toString()); // API 응답 로그
             } else {
                 throw new EDException("API 요청 실패: 응답 코드 " + responseCode);
             }
@@ -125,15 +127,18 @@ public class ApiTourController {
             // JSON 응답을 파싱하여 TourItemResponse 객체로 변환
             ObjectMapper mapper = new ObjectMapper();
             TourInformationResponse tourInformationResponse = mapper.readValue(result.toString(), TourInformationResponse.class);
-            
+            System.out.println("Parsed Response: " + tourInformationResponse); // 파싱된 응답 로그
+
             // 모델에 TourItem 리스트 추가
-            List<TourInformation> tourItems = tourInformationResponse.getResponse().getBody().getItems().getInformationList();
-            model.addAttribute("TourInformation", tourItems);
+            List<TourInformation> tourInformation = tourInformationResponse.getResponse().getBody().getItems().getInformationList();
+            System.out.println("Tour Information List: " + tourInformation); // TourInformation 리스트 로그
+            model.addAttribute("TourInformation", tourInformation);
         } catch (Exception e) {
+            e.printStackTrace(); // 예외 스택 트레이스 출력
             throw new EDException("Error occurred while calling the API", e);
         }
         
-        return "user/destination/tour"; // Thymeleaf 템플릿 이름
+        return "user/destination/tourInfomation"; // Thymeleaf 템플릿 이름
     }
     
     

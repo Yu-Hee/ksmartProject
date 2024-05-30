@@ -1,8 +1,11 @@
 package ksmart.tourproject.user.destination.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TourInformation {
     private String contentid; // 콘텐츠 ID
     private String contenttypeid; // 콘텐츠 타입 ID
@@ -27,4 +30,5 @@ public class TourInformation {
     private String mapx; // 지도 X 좌표
     private String mapy; // 지도 Y 좌표
     private String mlevel; // 맵 레벨
+    private String overview; // 맵 레벨
 }

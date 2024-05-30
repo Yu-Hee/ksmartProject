@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tour Information</title>
+</head>
+<body>
+    <h1>Tour Information</h1>
+    <div th:each="tourInformation : ${TourInformation}">
+        <p>콘텐츠 ID: <span th:text="${tourInformation.contentid}"></span></p>
+        <p>콘텐츠 타입 ID: <span th:text="${tourInformation.contenttypeid}"></span></p>
+        <p>제목: <span th:text="${tourInformation.title}"></span></p>
+        <p>생성 시간: <span th:text="${tourInformation.createdtime}"></span></p>
+        <p>수정 시간: <span th:text="${tourInformation.modifiedtime}"></span></p>
+        <p>전화번호: <span th:text="${tourInformation.tel}"></span></p>
+        <p>전화번호 이름: <span th:text="${tourInformation.telname}"></span></p>
+        <p>홈페이지: <span th:text="${tourInformation.homepage}"></span></p>
+        <p>예약 정보: <span th:text="${tourInformation.booktour}"></span></p>
+        <p>대표 이미지(원본): <img th:src="${tourInformation.firstimage}" alt="대표 이미지(원본)"></p>
+        <p>대표 이미지(썸네일): <img th:src="${tourInformation.firstimage2}" alt="대표 이미지(썸네일)"></p>
+        <p>저작권 구분 코드: <span th:text="${tourInformation.cpyrhtDivCd}"></span></p>
+        <p>지역 코드: <span th:text="${tourInformation.areacode}"></span></p>
+        <p>시군구 코드: <span th:text="${tourInformation.sigungucode}"></span></p>
+        <p>대분류 코드: <span th:text="${tourInformation.cat1}"></span></p>
+        <p>중분류 코드: <span th:text="${tourInformation.cat2}"></span></p>
+        <p>소분류 코드: <span th:text="${tourInformation.cat3}"></span></p>
+        <p>주소: <span th:text="${tourInformation.addr1}"></span></p>
+        <p>상세 주소: <span th:text="${tourInformation.addr2}"></span></p>
+        <hr/>
+    </div>
+</body>
+</html>
