@@ -17,9 +17,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ksmart.tourproject.exception.EDException;
 import ksmart.tourproject.user.destination.dto.TourItem;
 import ksmart.tourproject.user.destination.dto.TourItemResponse;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping(value = "/user/destination")
+@RequestMapping(value="/user/destination")
+@Slf4j
 public class destinationController {
 	
 	@GetMapping("/lodgingCheck")
@@ -71,7 +73,7 @@ public class destinationController {
 		
 		model.addAttribute("title", "숙소 조회");
 		
-		return "/user/destination/lodgingCheck";
+		return "user/destination/lodgingCheck";
 	}
 	
 	@GetMapping("/lodgingCheckDetails")
@@ -79,7 +81,7 @@ public class destinationController {
 		
 		model.addAttribute("title", "숙소 세부사항");
 		
-		return "/user/destination/lodgingCheckDetails";
+		return "user/destination/lodgingCheckDetails";
 	}
 	
 	@GetMapping("/restaurantCheck")
@@ -132,7 +134,7 @@ public class destinationController {
 		
 		model.addAttribute("title", "음식점 조회");
 		
-		return "/user/destination/restaurantCheck";
+		return "user/destination/restaurantCheck";
 	}
 	
 	@GetMapping("/restaurantCheckDetails")
@@ -140,7 +142,7 @@ public class destinationController {
 		
 		model.addAttribute("title", "음식점 세부사항");
 		
-		return "/user/destination/restaurantCheckDetails";
+		return "user/destination/restaurantCheckDetails";
 	}
 	
 
@@ -197,7 +199,7 @@ public class destinationController {
         
 		model.addAttribute("title", "관광지 조회");
 		
-		return "/user/destination/tourCheck";
+		return "user/destination/tourCheck";
 	}
 	
 	
@@ -206,7 +208,7 @@ public class destinationController {
 		
 		model.addAttribute("title", "관광지 세부사항");
 		
-		return "/user/destination/tourCheckDetails";
+		return "user/destination/tourCheckDetails";
 	}
 	
 	/*
