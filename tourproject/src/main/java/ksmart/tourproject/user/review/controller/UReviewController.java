@@ -86,6 +86,15 @@ public class UReviewController {
 		List<UReview> reviewList = uReviewService.getUReviewList();
 		log.info("reviewList: {} ",reviewList);
 		
+	    String contentId = (String) session.getAttribute("contentId"); // 세션에서 contentId 가져오기
+	    if (contentId == null) {
+	        // contentId가 없을 경우 처리
+	    }
+	    String contentTitle = (String) session.getAttribute("title"); // 세션에서 contentId 가져오기
+	    if (contentTitle == null) {
+	    	// contentId가 없을 경우 처리
+	    }
+		
 		model.addAttribute("title", "리뷰작성");
 		model.addAttribute("reviewList", reviewList);
 		
@@ -128,7 +137,7 @@ public class UReviewController {
 	 * @return
 	 */
 	@GetMapping("/list")
-	public String reviewList(Model model, Principal principal) {
+	public String reviewList(@RequestParam String contentId,Model model, Principal principal, HttpSession session) {
 		
 		List<UReview> uReviewList = uReviewService.getUReviewList();
 		List<UReviewComment> uReviewCommentList = uReviewService.getUReveiwComment();
@@ -145,7 +154,8 @@ public class UReviewController {
 		model.addAttribute("uReviewCommentList", uReviewCommentList);
 		model.addAttribute("uReviewFileList", uReviewFileList);
 		model.addAttribute("uReviewReportList", uReviewReportList);
-		
+        session.setAttribute("contentId", contentId); // 세션에 contentId 저장
+        
 		// 로그인 여부 확인
 		boolean isLoggedIn = (principal != null);
 		model.addAttribute("isLoggedIn", isLoggedIn);

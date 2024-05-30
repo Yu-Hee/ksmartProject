@@ -42,7 +42,7 @@
 		<section class="py-10">
 			<div class="container">
 				<form id="reviewForm" action="/user/review/write" method="POST" enctype="multipart/form-data">
-				<div class="container-fluid">
+<!-- 				<div class="container-fluid">
 					<div class="card mb-3">
 						<div class="row g-0">
 							<div class="col-md-4">
@@ -64,13 +64,21 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				<div class="separator1"></div>
 				<!-- 굵은 직선 추가 -->
 
 
 				<div class="table-container">
 					<div class="info-section">
+						<div class="label-cell label">콘텐츠 id</div>
+						<div class="input-cell1">
+							<input type="text" class="form-control table-input input" name="contentId" th:value="${session.contentId}" readonly />
+						</div>
+						<div class="label-cell label">상품 이름</div>
+						<div class="input-cell1">
+							<input type="text" class="form-control table-input input" name="contentTitle" th:value="${session.title}" readonly />
+						</div>
 						<div class="label-cell label">작성자 아이디</div>
 						<div class="input-cell1">
 							<input type="text" class="form-control table-input input" name="reviewId" th:value="${session.loginId}" data-review-id="${session.loginId}" readonly />
@@ -81,11 +89,6 @@
 						<div class="input-cell2">
 					        <input type="hidden" id="reviewApproveInput" name="reviewApprove" value="DISCLOSURE_001" readonly  />
 					        <span id="displayText">전체공개</span>
-						</div>
-						<div class="label-cell label">지역</div>
-						<div class="input-cell1">
-							<input type="text" class="form-control table-input input"
-								name="districtSubclassCode" value="RGN_SCTGRY_003" readonly />
 						</div>
 					</div>
 				</div>

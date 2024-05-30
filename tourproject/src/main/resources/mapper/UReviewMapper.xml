@@ -16,6 +16,8 @@
         <result property="reviewApprove" column="RLS_YN_CD"/>
         <result property="reviewNum" column="reviewNum"/>
         <result property="districtSubclassCode" column="RGN_SCTGRY_CD"/>
+        <result property="contentId" column="CONTENT_ID"/>
+        <result property="title" column="CONTENT_TITLE"/>
         
         <result property="tripLargeCode" column="TRIP_LCTGRY_CD"/>
         <result property="tripSubclassCode" column="TRIP_SCTGRY_CD"/>
@@ -83,6 +85,8 @@
 	        <result property="reviewApprove" column="RLS_YN_CD"/>
 	        <result property="reviewNum" column="reviewNum"/>
 	        <result property="districtSubclassCode" column="RGN_SCTGRY_CD"/>
+	        <result property="contentId" column="CONTENT_ID"/>
+	        <result property="title" column="CONTENT_TITLE"/>
 	        
 	        <result property="tripLargeCode" column="TRIP_LCTGRY_CD"/>
 	        <result property="tripSubclassCode" column="TRIP_SCTGRY_CD"/>
@@ -199,13 +203,13 @@
     </select>
 
     <!-- 리뷰 데이터를 삽입하는 쿼리 -->
-    <insert id="reviewWrite" parameterType="UReview">
-    	/* 리뷰등록 */
-        INSERT INTO PURCHASE_REVIEW
-        (PRCHS_REV_CD, REG_MBR_ID, PRTNR_BPLC_CD, RAT_CTGRY_NO, PRCHS_REV_CN, RLS_YN_CD, RGN_SCTGRY_CD, REG_YMD)
-        VALUES
-        (#{reviewCode}, #{reviewId}, #{reviewGoods}, #{reviewStar}, #{reviewContent}, #{reviewApprove},  #{districtSubclassCode}, NOW())
-    </insert>
+<insert id="reviewWrite" parameterType="UReview">
+    /* 리뷰등록 */
+    INSERT INTO PURCHASE_REVIEW
+    (PRCHS_REV_CD, REG_MBR_ID, RAT_CTGRY_NO, PRCHS_REV_CN, RLS_YN_CD, CONTENT_ID, CONTENT_TITLE, REG_YMD)
+    VALUES
+    (#{reviewCode}, #{reviewId}, #{reviewStar}, #{reviewContent}, #{reviewApprove}, #{contentId}, #{contentId}, NOW())
+</insert>
 
 	<insert id="reviewReport" parameterType="UReviewReport">
     /* 신고등록 */
@@ -250,7 +254,9 @@
             PRCHS_CD, 
             PRCHS_GDSOPT_CD, 
             MDFCN_YMD,
-            REPT_TOTAL
+            REPT_TOTAL,
+            CONTENT_ID,
+            CONTENT_TITLE
         FROM 
             PURCHASE_REVIEW
     </select>

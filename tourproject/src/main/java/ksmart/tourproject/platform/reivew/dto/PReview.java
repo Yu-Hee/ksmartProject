@@ -16,6 +16,7 @@ public class PReview {
 	private String reviewApproveName; //공개여부이름
 	private String reviewStarPoint; // 별점 내용
 	private String reviewNum; // 리뷰 번호
+	private String contentId;//지역 소분류 코드
 	
 	
 

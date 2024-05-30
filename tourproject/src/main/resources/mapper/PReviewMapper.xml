@@ -15,6 +15,7 @@
  		<result property="reviewDislike" 	column="DISLIKE_TOTAL"/>
  		<result property="reviewApprove" 	column="RLS_YN_CD"/>
  		<result property="reviewNum"		column="reviewNum"/>
+ 		<result property="contentId" column="CONTENT_ID"/>
  		
  		<result property="tripLargeCode" 	column="TRIP_LCTGRY_CD"/>
  		<result property="districtSubclassCode" 	column="RGN_SCTGRY_CD"/>
@@ -104,6 +105,7 @@
 	 		<result property="reviewDislike" 	column="DISLIKE_TOTAL"/>
 	 		<result property="reviewApprove" 	column="RLS_YN_CD"/>
 	 		<result property="reviewNum"		column="reviewNum"/>
+	 		<result property="contentId" column="CONTENT_ID"/>
 	 		
 	 		<result property="tripLargeCode" 	column="TRIP_LCTGRY_CD"/>
 	 		<result property="districtSubclassCode" 	column="RGN_SCTGRY_CD"/>
@@ -199,7 +201,8 @@
 			pr.PRCHS_GDSOPT_CD, 
 			pr.MDFCN_YMD,
 			pr.REPT_TOTAL,
-			pb.BZMN_CONM
+			pb.BZMN_CONM,
+			pr.CONTENT_ID
 	FROM 
 		PURCHASE_REVIEW AS pr
 		INNER JOIN
@@ -242,7 +245,8 @@
 			PRCHS_CD, 
 			PRCHS_GDSOPT_CD, 
 			MDFCN_YMD,
-			REPT_TOTAL
+			REPT_TOTAL,
+			CONTENT_ID
 		FROM 
 			PURCHASE_REVIEW
 		WHERE

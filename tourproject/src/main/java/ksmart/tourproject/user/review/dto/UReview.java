@@ -17,6 +17,8 @@ public class UReview {
 	private int reviewStarPoint; // 별점 내용
 	private String reviewNum; // 리뷰 번호
 	private String districtSubclassCode;//지역 소분류 코드
+	private String contentId;//지역 소분류 코드
+	private String title;//지역 소분류 코드
 	
 	
 

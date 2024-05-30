@@ -381,6 +381,7 @@
 	        url: '/user/review/json',
 	        type: 'GET',
 	        dataType: 'json',
+	        data: { contentId: contentId },
 	        success: function(data) {
 	            // DISCLOSURE_002인 리뷰를 필터링하여 새로운 배열에 저장합니다.
 	            let filteredReviewsData = data.filter(review => review.reviewApprove !== 'DISCLOSURE_002');
@@ -441,6 +442,7 @@
 	        url: '/user/review/file/json',
 	        type: 'GET',
 	        dataType: 'json',
+	        data: { contentId: contentId },
 	        success: function(data) {
 	            reviewFilesData = data;
 	            if (reviewsData && commentsData) {
