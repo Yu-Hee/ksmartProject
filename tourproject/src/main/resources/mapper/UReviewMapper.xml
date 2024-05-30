@@ -206,9 +206,9 @@
 <insert id="reviewWrite" parameterType="UReview">
     /* 리뷰등록 */
     INSERT INTO PURCHASE_REVIEW
-    (PRCHS_REV_CD, REG_MBR_ID, RAT_CTGRY_NO, PRCHS_REV_CN, RLS_YN_CD, CONTENT_ID, CONTENT_TITLE, REG_YMD)
+    (PRCHS_REV_CD, REG_MBR_ID, RAT_CTGRY_NO, PRCHS_REV_CN, RLS_YN_CD, CONTENT_ID, REG_YMD)
     VALUES
-    (#{reviewCode}, #{reviewId}, #{reviewStar}, #{reviewContent}, #{reviewApprove}, #{contentId}, #{contentId}, NOW())
+    (#{reviewCode}, #{reviewId}, #{reviewStar}, #{reviewContent}, #{reviewApprove}, #{contentId}, NOW())
 </insert>
 
 	<insert id="reviewReport" parameterType="UReviewReport">

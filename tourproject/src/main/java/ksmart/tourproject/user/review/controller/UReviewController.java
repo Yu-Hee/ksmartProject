@@ -77,26 +77,17 @@ public class UReviewController {
 	 * @return
 	 */
 	@GetMapping("/write") 
-	public String reviewWrite(Model model, HttpSession session) {
-		String loginId = (String) session.getAttribute("loginId");
-		if (loginId == null) {
-			return "redirect:/trip"; // 로그인 페이지 경로로 변경
-		}
+	public String reviewWrite(@RequestParam String contentId, Model model) {
 		
-		List<UReview> reviewList = uReviewService.getUReviewList();
-		log.info("reviewList: {} ",reviewList);
+		model.addAttribute("contentId", contentId);
 		
-	    String contentId = (String) session.getAttribute("contentId"); // 세션에서 contentId 가져오기
-	    if (contentId == null) {
-	        // contentId가 없을 경우 처리
-	    }
-	    String contentTitle = (String) session.getAttribute("title"); // 세션에서 contentId 가져오기
-	    if (contentTitle == null) {
-	    	// contentId가 없을 경우 처리
-	    }
-		
-		model.addAttribute("title", "리뷰작성");
-		model.addAttribute("reviewList", reviewList);
+	    List<UReview> reviewList = uReviewService.getUReviewList();
+	    log.info("reviewList: {} ",reviewList);
+
+
+	    model.addAttribute("title", "리뷰작성");
+	    model.addAttribute("reviewList", reviewList);
+
 		
 		return "user/review/reviewWrite"; 
 	}
@@ -107,7 +98,13 @@ public class UReviewController {
 	 * @return
 	 */
 	@PostMapping("/write")
-	public String reviewWrite(UReview review, HttpServletRequest request, Model model, @RequestParam(required = false) MultipartFile[] uploadfile) {
+	public String reviewWrite(@RequestParam String contentId, UReview review, HttpServletRequest request, HttpSession session, Model model, @RequestParam(required = false) MultipartFile[] uploadfile) {
+		
+	    // 세션에서 로그인 ID 가져오기
+	    String loginId = (String) session.getAttribute("loginId");
+	    model.addAttribute("reviewId", loginId);
+		
+		model.addAttribute("contentId", contentId);
 		
 		log.info("리뷰 작성 화면에서 입력받은 data: {}",review);
 		log.info("입력받은 file data: {}",Arrays.toString(uploadfile));
@@ -137,24 +134,23 @@ public class UReviewController {
 	 * @return
 	 */
 	@GetMapping("/list")
-	public String reviewList(@RequestParam String contentId,Model model, Principal principal, HttpSession session) {
+	public String reviewList(Model model, Principal principal) {
 		
 		List<UReview> uReviewList = uReviewService.getUReviewList();
 		List<UReviewComment> uReviewCommentList = uReviewService.getUReveiwComment();
 		List<UReviewFile> uReviewFileList = uReviewService.getFileList();
 		List<UReivewReportCategory> uReviewReportList = uReviewService.getReviewReportCategory();
 		
-		log.info("uReview: {}", uReviewList);
-		log.info("uReviewCommentList: {}", uReviewCommentList);
-		log.info("uReviewFileList: {}",uReviewFileList);
-		log.info("uReviewReportList: {}",uReviewReportList);
+		//log.info("uReview: {}", uReviewList);
+		//log.info("uReviewCommentList: {}", uReviewCommentList);
+		//log.info("uReviewFileList: {}",uReviewFileList);
+		//log.info("uReviewReportList: {}",uReviewReportList);
 		
 		model.addAttribute("title", "상품 후기 목록");
 		model.addAttribute("uReviewList", uReviewList);
 		model.addAttribute("uReviewCommentList", uReviewCommentList);
 		model.addAttribute("uReviewFileList", uReviewFileList);
 		model.addAttribute("uReviewReportList", uReviewReportList);
-        session.setAttribute("contentId", contentId); // 세션에 contentId 저장
         
 		// 로그인 여부 확인
 		boolean isLoggedIn = (principal != null);
@@ -237,7 +233,7 @@ public class UReviewController {
 	public List<UReviewComment> reviewCommentJsonView(Model model) {
 		
 		List<UReviewComment> uReviewCommentList = uReviewService.getUReveiwComment();
-		log.info("getUReveiwComment: {}", uReviewCommentList);
+		//log.info("getUReveiwComment: {}", uReviewCommentList);
 		
 		model.addAttribute("title", "리뷰 답글 목록");
 		model.addAttribute("getUReveiwComment", uReviewCommentList);

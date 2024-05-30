@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jakarta.servlet.http.HttpSession;
 import ksmart.tourproject.exception.EDException;
 import ksmart.tourproject.user.destination.dto.TourInformation;
 import ksmart.tourproject.user.destination.dto.TourInformationResponse;
@@ -292,6 +293,7 @@ public class destinationController {
             e.printStackTrace(); // 예외 스택 트레이스 출력
             throw new EDException("Error occurred while calling the API", e);
         }
+        
         // model에 contentId 추가
         model.addAttribute("contentId", contentId);
 		
@@ -371,7 +373,7 @@ public class destinationController {
 	 */
 	@GetMapping("/tourCheckDetails")
 	public String tourCheckDetails(@RequestParam String contentId, Model model) throws EDException {
-		StringBuilder result = new StringBuilder();
+StringBuilder result = new StringBuilder();
         
         String serviceKey = "HmjxL3ZwIR9BRISocvJb3ajCyCPzKPzt64QVyJUExpNDFEoSd96yRhkcF6ln23pFPYTSP3v15n23f092lrVAmg=="; // 실제 서비스 키를 입력하세요
         int numOfRows = 100; // 한 페이지당 가져올 항목 수
@@ -429,7 +431,8 @@ public class destinationController {
         }
         // model에 contentId 추가
         model.addAttribute("contentId", contentId);
-		model.addAttribute("title", "관광지 세부사항");
+       
+        model.addAttribute("title", "관광지 세부사항");
 		
 		return "user/destination/tourCheckDetails";
 	}

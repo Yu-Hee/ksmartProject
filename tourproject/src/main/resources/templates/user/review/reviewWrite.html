@@ -73,11 +73,7 @@
 					<div class="info-section">
 						<div class="label-cell label">콘텐츠 id</div>
 						<div class="input-cell1">
-							<input type="text" class="form-control table-input input" name="contentId" th:value="${session.contentId}" readonly />
-						</div>
-						<div class="label-cell label">상품 이름</div>
-						<div class="input-cell1">
-							<input type="text" class="form-control table-input input" name="contentTitle" th:value="${session.title}" readonly />
+							<input type="text" class="form-control table-input input" name="contentId" th:value="${contentId}" data-contnet-id="${contentId}" readonly />
 						</div>
 						<div class="label-cell label">작성자 아이디</div>
 						<div class="input-cell1">
@@ -153,6 +149,7 @@
 	<th:block layout:fragment="customJs">
 	
 	<script>
+	
 	document.addEventListener('DOMContentLoaded', function() {
 		let reviewApproveInput = document.getElementById('reviewApproveInput');
 		let displayText = document.getElementById('displayText');
@@ -375,8 +372,60 @@
         </script>
         
         <script>
-     // 리뷰 등록 버튼 클릭 시 호출되는 함수
         function submitReview() {
+            // 리뷰 내용을 가져옵니다.
+            let reviewContent = document.getElementById('review').value.trim();
+
+            // 리뷰 내용이 10자 이상인지 확인합니다.
+            if (reviewContent.length < 10) {
+                // 팝업 창을 띄웁니다.
+                alert('리뷰 내용을 10자 이상 입력해주세요.');
+                return false; // 리뷰 등록을 중단합니다.
+            }
+
+            // 리뷰 내용이 비어 있는지 확인합니다.
+            if (reviewContent === "") {
+                alert('리뷰 내용을 입력해주세요.');
+                return false; // 리뷰 등록을 중단합니다.
+            }
+            
+            // 별점을 선택하지 않았을 경우 팝업 창을 띄웁니다.
+            let selectedRating = document.querySelector('.star-rating input:checked');
+            if (!selectedRating) {
+                alert('별점을 선택해주세요.');
+                return false; // 리뷰 등록을 중단합니다.
+            }
+
+            // contentId 가져오기
+            let contentId = document.querySelector('[name="contentId"]').value;
+            
+            // 세션에서 사용자 아이디 가져오기
+            let reviewId = document.querySelector('[name="reviewId"]').value;
+            
+            let reviewApprove = "DISCLOSURE_001";
+
+            // 10자 이상인 경우, 리뷰를 제출합니다.
+            // 콘솔에 모든 입력된 값 출력
+            console.log("Content ID:", contentId);
+            console.log("Review Content:", reviewContent);
+            console.log("Selected Rating:", selectedRating.value);
+            console.log("Review ID:", reviewId);
+
+            // 폼 데이터 객체 생성
+            let formData = new FormData();
+            formData.append('contentId', contentId);
+            formData.append('reviewContent', reviewContent);
+            formData.append('reviewStar', selectedRating.value);
+            formData.append('reviewId', reviewId); // 리뷰 작성자 아이디 추가
+            formData.append('reviewApprove', reviewApprove); // 리뷰 작성자 아이디 추가
+
+            // 폼을 제출합니다.
+            document.getElementById('reviewForm').submit();
+        }
+
+        
+        
+/*         function submitReview() {
             // 리뷰 내용을 가져옵니다.
             let reviewContent = document.getElementById('review').value.trim();
 
@@ -407,7 +456,8 @@
 
             // 폼을 제출합니다.
             document.getElementById('reviewForm').submit();
-        }
+        } */
+
 </script>
 	</th:block>
 </html>
