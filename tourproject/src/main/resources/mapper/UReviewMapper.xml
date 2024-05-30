@@ -194,7 +194,8 @@
 	
 	    <!-- 가장 큰 PRCHS_REV_CD 값을 조회하는 쿼리 -->
     <select id="getMaxPrchsRevCd" resultType="String">
-        SELECT MAX(PRCHS_REV_CD) FROM PURCHASE_REVIEW
+		SELECT CONCAT('PRCHS_REV_', MAX(CAST(SUBSTRING(PRCHS_REV_CD, 11) AS SIGNED))) AS maxPrchsRevCd FROM PURCHASE_REVIEW;
+
     </select>
     
     <!-- 가장 큰 REV_REPT_NO 값을 조회하는 쿼리 -->
