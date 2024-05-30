@@ -20,6 +20,8 @@ import ksmart.tourproject.user.destination.dto.TourInformation;
 import ksmart.tourproject.user.destination.dto.TourInformationResponse;
 import ksmart.tourproject.user.destination.dto.TourItem;
 import ksmart.tourproject.user.destination.dto.TourItemResponse;
+import ksmart.tourproject.user.destination.dto.TourList;
+import ksmart.tourproject.user.destination.dto.TourListResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -27,12 +29,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class destinationController {
 	
+	/**
+	 * 숙소
+	 * @param model
+	 * @return
+	 * @throws EDException
+	 */
 	@GetMapping("/lodgingCheck")
 	public String lodgingCheck(Model model) throws EDException {
 		StringBuilder result = new StringBuilder();
 		
         String serviceKey = "HmjxL3ZwIR9BRISocvJb3ajCyCPzKPzt64QVyJUExpNDFEoSd96yRhkcF6ln23pFPYTSP3v15n23f092lrVAmg=="; // 실제 서비스 키를 입력하세요
-        int numOfRows = 100; // 한 페이지당 가져올 항목 수
+        int numOfRows = 500; // 한 페이지당 가져올 항목 수
         int startPage = 1; // 시작 페이지 번호
         String urlStr = "http://apis.data.go.kr/B551011/KorService1/searchStay1" +
                         "?serviceKey=" + serviceKey +
@@ -79,6 +87,13 @@ public class destinationController {
 		return "user/destination/lodgingCheck";
 	}
 	
+	/**
+	 * 숙소 상제 정보
+	 * @param contentId
+	 * @param model
+	 * @return
+	 * @throws EDException
+	 */
 	@GetMapping("/lodgingCheckDetails")
 	public String lodgingCheckDetails(@RequestParam String contentId, Model model) throws EDException {
 		
@@ -148,30 +163,32 @@ public class destinationController {
 	
 	
 	
-	
+	/**
+	 * 음식점
+	 * @param model
+	 * @return
+	 * @throws EDException
+	 */
 	@GetMapping("/restaurantCheck")
 	public String restaurantCheck(Model model) throws EDException {
 		
 		StringBuilder result = new StringBuilder();
 		
         String serviceKey = "HmjxL3ZwIR9BRISocvJb3ajCyCPzKPzt64QVyJUExpNDFEoSd96yRhkcF6ln23pFPYTSP3v15n23f092lrVAmg=="; // 실제 서비스 키를 입력하세요
-        int numOfRows = 100; // 한 페이지당 가져올 항목 수
-        int startPage = 1; // 시작 페이지 번호
-        String urlStr = "http://apis.data.go.kr/B551011/KorService1/searchStay1" +
-                        "?serviceKey=" + serviceKey +
-	                    "&numOfRows=" + numOfRows + // 수정된 부분
-	                    "&pageNo=" +
-	                    "&MobileOS=ETC" +
-	                    "&MobileApp=AppTest" +
-	                    "&_type=json" +
-	                    "&listYN=Y" +
-	                    "&arrange=A";
+        int contentTypeId = 39; // 콘텐츠 타입 ID
+        String urlStr = "https://apis.data.go.kr/B551011/KorService1/areaBasedSyncList1" +
+                "?serviceKey=" + serviceKey + // 서비스 키
+                "&MobileOS=ETC" + // 모바일 OS
+                "&MobileApp=1" + // 모바일 앱 이름
+                "&_type=json" + // 응답 형식
+                "&contentTypeId=" + contentTypeId+ // 콘텐츠 타입 ID
+        		"&numOfRows=" + 500; // 한 페이지당 가져올 항목 수
         
         try {
             URL url = new URL(urlStr);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
-            
+
             int responseCode = urlConnection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
@@ -183,16 +200,19 @@ public class destinationController {
             } else {
                 throw new EDException("API 요청 실패: 응답 코드 " + responseCode);
             }
-            
+
             urlConnection.disconnect();
-            
-            // JSON 응답을 파싱하여 TourItemResponse 객체로 변환
+
+            // 콘솔에 JSON 응답 출력
+            System.out.println("API 응답: " + result.toString());
+
+            // JSON 응답을 파싱하여 TourListResponse 객체로 변환
             ObjectMapper mapper = new ObjectMapper();
-            TourItemResponse tourItemResponse = mapper.readValue(result.toString(), TourItemResponse.class);
-            
-            // 모델에 TourItem 리스트 추가
-            List<TourItem> tourItems = tourItemResponse.getResponse().getBody().getItems().getItemList();
-            model.addAttribute("tourItems", tourItems);
+            TourListResponse tourListResponse = mapper.readValue(result.toString(), TourListResponse.class);
+
+            // 모델에 TourList 리스트 추가
+            List<TourList> tourList = tourListResponse.getResponse().getBody().getItems().getTourList();
+            model.addAttribute("tourList", tourList);
         } catch (Exception e) {
             throw new EDException("Error occurred while calling the API", e);
         }
@@ -206,10 +226,74 @@ public class destinationController {
 	
 	
 	
-	
+	/**
+	 * 음식점 상세 정보
+	 * @param contentId
+	 * @param model
+	 * @return
+	 * @throws EDException
+	 */
 	
 	@GetMapping("/restaurantCheckDetails")
-	public String restaurantCheckDetails(Model model) {
+	public String restaurantCheckDetails(@RequestParam String contentId, Model model) throws EDException {
+		StringBuilder result = new StringBuilder();
+        
+        String serviceKey = "HmjxL3ZwIR9BRISocvJb3ajCyCPzKPzt64QVyJUExpNDFEoSd96yRhkcF6ln23pFPYTSP3v15n23f092lrVAmg=="; // 실제 서비스 키를 입력하세요
+        int numOfRows = 100; // 한 페이지당 가져올 항목 수
+        int startPage = 1; // 시작 페이지 번호
+        String urlStr = "https://apis.data.go.kr/B551011/KorService1/detailCommon1" +
+                "?serviceKey=" + serviceKey +
+                "&MobileOS=ETC" +
+                "&MobileApp=test" +
+                "&_type=json" +
+                "&contentId=" + contentId + // 콘텐츠 ID
+                "&defaultYN=Y" + // 기본정보 조회 여부
+                "&firstImageYN=Y" + // 대표이미지 조회 여부
+                "&areacodeYN=Y" + // 지역코드 조회 여부
+                "&catcodeYN=Y" + // 서비스분류코드 조회 여부
+                "&addrinfoYN=Y" + // 주소 조회 여부
+                "&mapinfoYN=Y" + // 좌표 조회 여부
+                "&overviewYN=Y"; // 개요 조회 여부
+        
+        try {
+            URL url = new URL(urlStr);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+
+            System.out.println("Requesting URL: " + urlStr); // 요청 URL 로그
+
+            int responseCode = urlConnection.getResponseCode();
+            System.out.println("Response Code: " + responseCode); // 응답 코드 로그
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
+                    String returnLine;
+                    while ((returnLine = br.readLine()) != null) {
+                        result.append(returnLine).append("\n");
+                    }
+                }
+                System.out.println("API Response: " + result.toString()); // API 응답 로그
+            } else {
+                throw new EDException("API 요청 실패: 응답 코드 " + responseCode);
+            }
+            
+            urlConnection.disconnect();
+            
+            // JSON 응답을 파싱하여 TourItemResponse 객체로 변환
+            ObjectMapper mapper = new ObjectMapper();
+            TourInformationResponse tourInformationResponse = mapper.readValue(result.toString(), TourInformationResponse.class);
+            System.out.println("Parsed Response: " + tourInformationResponse); // 파싱된 응답 로그
+
+            // 모델에 TourItem 리스트 추가
+            List<TourInformation> tourInformation = tourInformationResponse.getResponse().getBody().getItems().getInformationList();
+            System.out.println("Tour Information List: " + tourInformation); // TourInformation 리스트 로그
+            model.addAttribute("TourInformation", tourInformation);
+        } catch (Exception e) {
+            e.printStackTrace(); // 예외 스택 트레이스 출력
+            throw new EDException("Error occurred while calling the API", e);
+        }
+        // model에 contentId 추가
+        model.addAttribute("contentId", contentId);
 		
 		model.addAttribute("title", "음식점 세부사항");
 		
@@ -219,30 +303,32 @@ public class destinationController {
 
 	
 	
-
+	/**
+	 * 관광지 조회
+	 * @param model
+	 * @return
+	 * @throws EDException
+	 */
 	@GetMapping("/tourCheck")
 	public String tourCheck(Model model) throws EDException {
 		
 		StringBuilder result = new StringBuilder();
 		
         String serviceKey = "HmjxL3ZwIR9BRISocvJb3ajCyCPzKPzt64QVyJUExpNDFEoSd96yRhkcF6ln23pFPYTSP3v15n23f092lrVAmg=="; // 실제 서비스 키를 입력하세요
-        int numOfRows = 100; // 한 페이지당 가져올 항목 수
-        int startPage = 1; // 시작 페이지 번호
-        String urlStr = "http://apis.data.go.kr/B551011/KorService1/searchStay1" +
-                        "?serviceKey=" + serviceKey +
-	                    "&numOfRows=" + numOfRows + // 수정된 부분
-	                    "&pageNo=" +
-	                    "&MobileOS=ETC" +
-	                    "&MobileApp=AppTest" +
-	                    "&_type=json" +
-	                    "&listYN=Y" +
-	                    "&arrange=A";
+        int contentTypeId = 12; // 콘텐츠 타입 ID
+        String urlStr = "https://apis.data.go.kr/B551011/KorService1/areaBasedSyncList1" +
+                "?serviceKey=" + serviceKey + // 서비스 키
+                "&MobileOS=ETC" + // 모바일 OS
+                "&MobileApp=1" + // 모바일 앱 이름
+                "&_type=json" + // 응답 형식
+                "&contentTypeId=" + contentTypeId+ // 콘텐츠 타입 ID
+        		"&numOfRows=" + 500; // 한 페이지당 가져올 항목 수
         
         try {
             URL url = new URL(urlStr);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
-            
+
             int responseCode = urlConnection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
@@ -254,16 +340,19 @@ public class destinationController {
             } else {
                 throw new EDException("API 요청 실패: 응답 코드 " + responseCode);
             }
-            
+
             urlConnection.disconnect();
-            
-            // JSON 응답을 파싱하여 TourItemResponse 객체로 변환
+
+            // 콘솔에 JSON 응답 출력
+            System.out.println("API 응답: " + result.toString());
+
+            // JSON 응답을 파싱하여 TourListResponse 객체로 변환
             ObjectMapper mapper = new ObjectMapper();
-            TourItemResponse tourItemResponse = mapper.readValue(result.toString(), TourItemResponse.class);
-            
-            // 모델에 TourItem 리스트 추가
-            List<TourItem> tourItems = tourItemResponse.getResponse().getBody().getItems().getItemList();
-            model.addAttribute("tourItems", tourItems);
+            TourListResponse tourListResponse = mapper.readValue(result.toString(), TourListResponse.class);
+
+            // 모델에 TourList 리스트 추가
+            List<TourList> tourList = tourListResponse.getResponse().getBody().getItems().getTourList();
+            model.addAttribute("tourList", tourList);
         } catch (Exception e) {
             throw new EDException("Error occurred while calling the API", e);
         }
@@ -273,10 +362,73 @@ public class destinationController {
 		return "user/destination/tourCheck";
 	}
 	
-	
+	/**
+	 * 관광지 세부정보
+	 * @param contentId
+	 * @param model
+	 * @return
+	 * @throws EDException
+	 */
 	@GetMapping("/tourCheckDetails")
-	public String tourCheckDetails(Model model) {
-		
+	public String tourCheckDetails(@RequestParam String contentId, Model model) throws EDException {
+		StringBuilder result = new StringBuilder();
+        
+        String serviceKey = "HmjxL3ZwIR9BRISocvJb3ajCyCPzKPzt64QVyJUExpNDFEoSd96yRhkcF6ln23pFPYTSP3v15n23f092lrVAmg=="; // 실제 서비스 키를 입력하세요
+        int numOfRows = 100; // 한 페이지당 가져올 항목 수
+        int startPage = 1; // 시작 페이지 번호
+        String urlStr = "https://apis.data.go.kr/B551011/KorService1/detailCommon1" +
+                "?serviceKey=" + serviceKey +
+                "&MobileOS=ETC" +
+                "&MobileApp=test" +
+                "&_type=json" +
+                "&contentId=" + contentId + // 콘텐츠 ID
+                "&defaultYN=Y" + // 기본정보 조회 여부
+                "&firstImageYN=Y" + // 대표이미지 조회 여부
+                "&areacodeYN=Y" + // 지역코드 조회 여부
+                "&catcodeYN=Y" + // 서비스분류코드 조회 여부
+                "&addrinfoYN=Y" + // 주소 조회 여부
+                "&mapinfoYN=Y" + // 좌표 조회 여부
+                "&overviewYN=Y"; // 개요 조회 여부
+        
+        try {
+            URL url = new URL(urlStr);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+
+            System.out.println("Requesting URL: " + urlStr); // 요청 URL 로그
+
+            int responseCode = urlConnection.getResponseCode();
+            System.out.println("Response Code: " + responseCode); // 응답 코드 로그
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
+                    String returnLine;
+                    while ((returnLine = br.readLine()) != null) {
+                        result.append(returnLine).append("\n");
+                    }
+                }
+                System.out.println("API Response: " + result.toString()); // API 응답 로그
+            } else {
+                throw new EDException("API 요청 실패: 응답 코드 " + responseCode);
+            }
+            
+            urlConnection.disconnect();
+            
+            // JSON 응답을 파싱하여 TourItemResponse 객체로 변환
+            ObjectMapper mapper = new ObjectMapper();
+            TourInformationResponse tourInformationResponse = mapper.readValue(result.toString(), TourInformationResponse.class);
+            System.out.println("Parsed Response: " + tourInformationResponse); // 파싱된 응답 로그
+
+            // 모델에 TourItem 리스트 추가
+            List<TourInformation> tourInformation = tourInformationResponse.getResponse().getBody().getItems().getInformationList();
+            System.out.println("Tour Information List: " + tourInformation); // TourInformation 리스트 로그
+            model.addAttribute("TourInformation", tourInformation);
+        } catch (Exception e) {
+            e.printStackTrace(); // 예외 스택 트레이스 출력
+            throw new EDException("Error occurred while calling the API", e);
+        }
+        // model에 contentId 추가
+        model.addAttribute("contentId", contentId);
 		model.addAttribute("title", "관광지 세부사항");
 		
 		return "user/destination/tourCheckDetails";
