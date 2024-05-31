@@ -73,7 +73,7 @@ private final UReviewService uReviewService;
 	 * @return
 	 */
 	
-	@PostMapping("tourCheckDetails")
+	@PostMapping("/tourCheckDetails")
 	public String tourreviewReport(@RequestParam(name = "contentId", required = false) String contentId, UReviewReport reviewReport, HttpServletRequest request) {
 		log.info("신고 모달 화면에서 입력받은 data: {}", reviewReport);
 
