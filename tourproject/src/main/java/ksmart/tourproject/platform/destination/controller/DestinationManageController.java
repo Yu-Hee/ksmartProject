@@ -238,21 +238,21 @@ public class DestinationManageController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/destination/restaurantManage")
+	@GetMapping("/restaurantManage")
 	public String restaurantManage(Model model) {
 		List<Destination> restaurantInfoList = destinationService.getRestaurantInfoList();
 		
 		model.addAttribute("restaurantInfoList", restaurantInfoList);
 		model.addAttribute("title", "식당 관리");
 		
-		return "/platform/destination/restaurantManage";
+		return "platform/destination/restaurantManage";
 	}
 	/**
 	 * 음식점 상세정보 관리
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/destination/restaurantMenuManage")
+	@GetMapping("/restaurantMenuManage")
 	public String restaurantMenuManage(Model model) {
 		List<Destination> restaurantMenuList = destinationService.getRestaurantMenuList();
 		log.info("DestinationManageController restaurantMenuList:{}", restaurantMenuList);
@@ -260,24 +260,24 @@ public class DestinationManageController {
 		model.addAttribute("restaurantMenuList", restaurantMenuList);
 		model.addAttribute("title", "식당메뉴 관리");
 		
-		return "/platform/destination/restaurantMenuManage";
+		return "platform/destination/restaurantMenuManage";
 	}
 	
 	
-	@GetMapping("/destination/destinationRegister")
+	@GetMapping("/destinationRegister")
 	public String destinationRegister(Model model) {
 		
 		model.addAttribute("title", "여행지 등록");
 		
-		return "/platform/destination/destinationRegister";
+		return "platform/destination/destinationRegister";
 	}
 	
-	@GetMapping("/destination/categoryManage")
+	@GetMapping("/categoryManage")
 	public String categoryManage(Model model) {
 		
 		model.addAttribute("title", "카테고리 관리");
 		
-		return "/platform/destination/categoryManage";
+		return "platform/destination/categoryManage";
 		
 	}
 

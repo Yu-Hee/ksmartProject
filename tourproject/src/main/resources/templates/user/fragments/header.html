@@ -53,48 +53,48 @@
                         </ul>
                     </li> -->
                     <li class="">
-                        <a href="#">여행지 정보</a>
+                        <a href="#">상품 확인하기</a>
                         <ul class="dropdown drop-up" id="tourInfo">
                             <li class="">
-                                <a th:href="@{/user/destination/tourCheck}">? 관광지 조회</a>
+                                <a th:href="@{/user/destination/tourCheck}">관광지</a>
                             </li>
                             <li class="">
-                                <a th:href="@{/user/destination/lodgingCheck}">? 숙소 조회</a>
+                                <a th:href="@{/user/destination/lodgingCheck}">숙박</a>
                             </li>
                             <li class="">
-                                <a th:href="@{/user/destination/restaurantCheck}">? 음식점 조회</a>
+                                <a th:href="@{/user/destination/restaurantCheck}">음식점</a>
+                            </li>
+<!--                             <li class="">
+                                <a th:href="@{/user/destination/tourCheckDetails}">관광지 세부사항</a>
                             </li>
                             <li class="">
-                                <a th:href="@{/user/destination/tourCheckDetails}">? 관광지 세부사항</a>
+                                <a th:href="@{/user/destination/lodgingCheckDetails}">숙소 세부</a>
                             </li>
                             <li class="">
-                                <a th:href="@{/user/destination/lodgingCheckDetails}">? 숙소 세부</a>
-                            </li>
-                            <li class="">
-                                <a th:href="@{/user/destination/restaurantCheckDetails}">? 음식점 세부</a>
-                            </li>
+                                <a th:href="@{/user/destination/restaurantCheckDetails}">음식점 세부</a>
+                            </li> -->
                         </ul>
                     </li>
                     <li class="">
-                        <a href="#">회원 정보</a>
+                        <a href="#">회원 관리</a>
                         <ul class="dropdown drop-up" id="userInfo">
                             <li class="">
-                                <a data-bs-target="#login" data-bs-toggle="modal" th:href="@{#}"> 로그인 모달</a>
+                                <a data-bs-target="#login" data-bs-toggle="modal" th:href="@{#}">로그인</a>
                             </li>
                             <li class="">
-                                <a data-bs-target="#joinSelect" data-bs-toggle="modal" th:href="@{#}"> 회원 가입 모달</a>
+                                <a data-bs-target="#joinSelect" data-bs-toggle="modal" th:href="@{#}">회원 가입</a>
                             </li>
                             <li class="">
-                                <a data-bs-target="#mypageModal" data-bs-toggle="modal" th:href="@{#}"> 마이페이지 모달</a>
+                                <a data-bs-target="#mypageModal" data-bs-toggle="modal" th:href="@{#}">마이페이지</a>
                             </li>
                             <li class="">
-                                <a data-bs-target="#findId" data-bs-toggle="modal" th:href="@{#}"> 아이디찾기 모달</a>
+                                <a data-bs-target="#findId" data-bs-toggle="modal" th:href="@{#}">아이디찾기</a>
                             </li>
                             <li class="">
-                                <a data-bs-target="#findPw" data-bs-toggle="modal" th:href="@{#}"> 비밀번호찾기 모달</a>
+                                <a data-bs-target="#findPw" data-bs-toggle="modal" th:href="@{#}">비밀번호찾기</a>
                             </li>
                             <li class="">
-                                <a data-bs-target="#modifyModal" data-bs-toggle="modal" th:href="@{#}"> 회원정보 수정 모달</a>
+                                <a data-bs-target="#modifyModal" data-bs-toggle="modal" th:href="@{#}">회원정보 수정</a>
                             </li>
                         </ul>
                     </li>
@@ -119,11 +119,14 @@
                         <a href="#">리뷰</a>
                         <ul class="dropdown drop-up" id="customerReview">
                             <li class="">
+                                <a th:href="@{#}">작성한 리뷰 확인</a>
+                            </li>
+                        <!--    <li class="">
                                 <a th:href="@{/user/review/list}">? 작성한 리뷰 리스트</a>
                             </li>
                             <li class="">
                                 <a th:href="@{/user/review/write}">? 상품 리뷰 작성</a>
-                            </li>
+                            </li> -->
                         </ul>
                     </li>
                         <li class="py-6" th:if="${session.loginId == null}">
