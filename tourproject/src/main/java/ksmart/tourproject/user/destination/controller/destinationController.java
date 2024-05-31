@@ -94,7 +94,7 @@ private final UReviewService uReviewService;
 		StringBuilder result = new StringBuilder();
 		
         String serviceKey = "HmjxL3ZwIR9BRISocvJb3ajCyCPzKPzt64QVyJUExpNDFEoSd96yRhkcF6ln23pFPYTSP3v15n23f092lrVAmg=="; // 실제 서비스 키를 입력하세요
-        int numOfRows = 500; // 한 페이지당 가져올 항목 수
+        int numOfRows = 100; // 한 페이지당 가져올 항목 수
         int startPage = 1; // 시작 페이지 번호
         String urlStr = "http://apis.data.go.kr/B551011/KorService1/searchStay1" +
                         "?serviceKey=" + serviceKey +
@@ -251,7 +251,7 @@ private final UReviewService uReviewService;
                 "&MobileApp=1" + // 모바일 앱 이름
                 "&_type=json" + // 응답 형식
                 "&contentTypeId=" + contentTypeId+ // 콘텐츠 타입 ID
-        		"&numOfRows=" + 500; // 한 페이지당 가져올 항목 수
+        		"&numOfRows=" + 100; // 한 페이지당 가져올 항목 수
         
         try {
             URL url = new URL(urlStr);
@@ -405,7 +405,7 @@ private final UReviewService uReviewService;
                 "&MobileApp=1" + // 모바일 앱 이름
                 "&_type=json" + // 응답 형식
                 "&contentTypeId=" + contentTypeId+ // 콘텐츠 타입 ID
-        		"&numOfRows=" + 500; // 한 페이지당 가져올 항목 수
+        		"&numOfRows=" + 100; // 한 페이지당 가져올 항목 수
         
         try {
             URL url = new URL(urlStr);
