@@ -81,6 +81,7 @@
  		<result property="reportApproveDate" column="APRV_YMD"/>
  		<result property="reportTotal" column="reportTotal"/>
  		<result property="reportApproveName" column="reportApproveName" javaType="java.lang.String" jdbcType="VARCHAR" />
+ 		<result property="contentId" column="CONTENT_ID"/>
  		
  		<association property="PReviewReportCategoryInfo" javaType="PReviewReportCategory">
 	 		<id property="reportCategoryId" 			column="REPT_CTGRY_NO"/>
@@ -173,6 +174,7 @@
  		<result property="reviewReactCheck" column="LIKE_DISLIKE_YN"/>
  		<result property="reviewReactDate" column="REG_YMD"/>
  		<result property="reviewReactModifyDate" column="MDFCN_YMD"/>
+ 		<result property="contentId" column="CONTENT_ID"/>
  	</resultMap>
  
  
@@ -274,7 +276,8 @@
 			PRCHS_REV_CD, 
 			LIKE_DISLIKE_YN, 
 			REG_YMD, 
-			MDFCN_YMD
+			MDFCN_YMD,
+			CONTENT_ID
 		FROM 
 			REVIEW_LIKE_DISLIKE
 	 </select>
@@ -347,7 +350,8 @@
 			rrh.REV_REPT_APRV, 
 			rrh.APRV_PF_ID,
 			rrh.APRV_YMD,
-			pbp.REPT_CTGRY_TYPE
+			pbp.REPT_CTGRY_TYPE,
+			rrh.CONTENT_ID
 		FROM 
 			REVIEW_REPORT_HISTORY AS rrh
 			INNER JOIN
@@ -367,7 +371,8 @@
 			REPT_YMD,
 			REV_REPT_APRV, 
 			APRV_PF_ID,
-			APRV_YMD
+			APRV_YMD,
+			CONTENT_ID
 		FROM 
 			REVIEW_REPORT_HISTORY
 		WHERE
@@ -386,6 +391,7 @@
 	 	WHERE
 	 		REV_REPT_NO = #{reportCode};
 	 		
+	 		
 	 </select>
 	 
 
@@ -396,7 +402,8 @@
 			rrh.PRCHS_REV_CD,
 			COUNT(rrh.PRCHS_REV_CD) AS reportTotal,
 			pr.RLS_YN_CD,
-			ds.RLS_CN
+			ds.RLS_CN,
+			rrh.CONTENT_ID
 		FROM 
 			REVIEW_REPORT_HISTORY AS rrh
 			INNER JOIN

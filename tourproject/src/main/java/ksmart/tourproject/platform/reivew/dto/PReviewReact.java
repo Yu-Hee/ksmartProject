@@ -12,6 +12,8 @@ public class PReviewReact {
 	private String reviewReactDate; //등록일자
 	private String reviewReactModifyDate; //수정일자
 	private String reviewReactNum; //좋아요싫어요 기록 번호
+	private String contentId; //좋아요싫어요 기록 번호
+	
 	
 	private PReport reportCate;
 }

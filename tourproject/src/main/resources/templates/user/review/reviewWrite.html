@@ -132,7 +132,7 @@
 				    <div class="form-group">
 				        <!-- Thymeleaf를 사용하여 링크의 대상 URL 설정 -->
 				         <button type="button" class="btn register-button" onclick="submitReview()">등록</button>
-				        <a th:href="@{/user/review/list}"><button type="reset" class="btn cancel-button">취소</button></a>
+				       	 <button type="button" class="btn cancel-button" onclick="goBack()">취소</button>
 				    </div>
 				
 				    <!-- 추가된 요소: 별점 평가 문구 -->
@@ -372,6 +372,11 @@
         </script>
         
         <script>
+        
+        function goBack() {
+        	  window.history.back();
+        	}
+        
         function submitReview() {
             // 리뷰 내용을 가져옵니다.
             let reviewContent = document.getElementById('review').value.trim();

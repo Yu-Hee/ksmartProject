@@ -16,7 +16,7 @@
                     <div class="col-md-6 col-xl-4 mb-5"
                         th:each="tourList : ${tourList}">
                         <div class="card card-hover text-center" style="height: 500px;">
-                            <a th:href="@{/user/destination/restaurantCheckDetails(contentId=${tourList.contentid})}" class="position-relative"> <img
+                            <a th:href="@{/user/destination/tourCheckDetails(contentId=${tourList.contentid})}" class="position-relative"> <img
                                 th:src="${tourList.firstimage}"
                                 style="width: 330px; height: 200px; margin-top: 20px;  margin-bottom:20px;"
                                 onerror="this.onerror=null;this.src='/user/img/존재하지않는이미지.jpg';"
@@ -27,7 +27,7 @@
 
                             <div class="card-body px-4">
                                 <h5>
-                                    <a th:href="@{/user/destination/restaurantCheckDetails(contentId=${tourList.contentid})}" class="card-title text-uppercase"><span
+                                    <a th:href="@{/user/destination/tourCheckDetails(contentId=${tourList.contentid})}" class="card-title text-uppercase"><span
                                         th:text="${tourList.title}"></span>
                                     </p></a>
                                 </h5>

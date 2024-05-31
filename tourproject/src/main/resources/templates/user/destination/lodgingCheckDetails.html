@@ -115,6 +115,7 @@
         <p style="font-size: 20px; color: black; margin-bottom: 50px;"><img th:src="${tourInformation.firstimage}"
         onerror="this.onerror=null;this.src='/user/img/존재하지않는이미지.jpg';"></p>
         <p style="font-size: 20px; color: black; margin-bottom: 20px; line-height: 1.5;"><span th:text="${tourInformation.overview}"></span></p>
+
         <hr style="margin-bottom: 100px;"/>
     </div>
 </div>
@@ -305,7 +306,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-<form id="reviewReportForm" action="/user/review/list" method="POST" enctype="multipart/form-data">
+<form id="reviewReportForm" action="/user/destination/lodgingCheckDetails" method="POST" enctype="multipart/form-data">
     <div>
         <input type="hidden" id="reviewCodeInput" name="reviewReportReviewCode" readonly>
     </div>
@@ -328,11 +329,10 @@
         </ul>
     </div>
     <input type="hidden" id="reviewReportCategoryCode" name="reviewReportCategoryCode">
+    <input type="hidden" id="contentId" name="contentId" th:value="${contentId}">
     <div class="mb-3">
         <label for="message-text" class="col-form-label">신고내용:</label>
-        <textarea class="form-control" id="message-text" maxlength="100" name="reviewReportContent"></textarea>
-        <div id="char-count">0/100</div>
-    </div>
+        <textarea class="form-control" id="message-text" maxlength="100" name="reviewReportContent"></textarea>    </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
         <button type="submit" class="btn btn-primary">신고</button>
@@ -635,11 +635,16 @@
 		        // 클릭된 항목의 데이터 속성에서 카테고리 코드를 가져옵니다.
 		        const categoryCode = $(this).data('category-code');
 		        
+		        // contentId를 숨겨진 필드에서 가져옵니다.
+		        const contentId = $('#contentId').val();
+		        console.log("Content ID:", contentId);
+		        
 		        // 콘솔에 categoryCode 값을 출력합니다.
 		        console.log("Selected Category Code:", categoryCode);
 		        
 		        // 숨겨진 필드에 해당 값을 할당합니다.
 		        $('#reviewReportCategoryCode').val(categoryCode);
+		        
 		        
 		        // 버튼 부분에 선택된 값 표시
 		        const selectedText = $(this).text();

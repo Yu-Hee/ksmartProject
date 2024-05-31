@@ -13,6 +13,7 @@ public class UReviewReport {
 	private String reviewReportAction;//승인여부
 	private String reviewReportActionDate; //승인여부날짜
 	private String reviewReportContent; //신고 내용
+	private String contentId; //신고 내용
 	
 	private UReview reviewInfo;
 	private UReivewReportCategory reviewReportCategoryInfo;

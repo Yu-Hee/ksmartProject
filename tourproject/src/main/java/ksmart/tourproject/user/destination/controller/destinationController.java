@@ -5,17 +5,19 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
 import ksmart.tourproject.exception.EDException;
 import ksmart.tourproject.user.destination.dto.TourInformation;
 import ksmart.tourproject.user.destination.dto.TourInformationResponse;
@@ -23,12 +25,63 @@ import ksmart.tourproject.user.destination.dto.TourItem;
 import ksmart.tourproject.user.destination.dto.TourItemResponse;
 import ksmart.tourproject.user.destination.dto.TourList;
 import ksmart.tourproject.user.destination.dto.TourListResponse;
+import ksmart.tourproject.user.review.dto.UReivewReportCategory;
+import ksmart.tourproject.user.review.dto.UReviewReport;
+import ksmart.tourproject.user.review.service.UReviewService;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping(value="/user/destination")
 @Slf4j
 public class destinationController {
+	
+private final UReviewService uReviewService;
+	
+	public destinationController(UReviewService uReviewService) {
+		this.uReviewService = uReviewService;
+	}
+	
+	/**
+	 * 신고작성
+	 * @return
+	 */
+	@PostMapping("/lodgingCheckDetails")
+	public String lodgingreviewReport(@RequestParam(name = "contentId", required = false) String contentId, UReviewReport reviewReport, HttpServletRequest request) {
+		log.info("신고 모달 화면에서 입력받은 data: {}", reviewReport);
+
+		uReviewService.reviewReport(reviewReport);
+		
+		return "redirect:/user/destination/lodgingCheckDetails?contentId=" + contentId;
+	}
+	
+	/**
+	 * 신고작성
+	 * @return
+	 */
+	
+	@PostMapping("/restaurantCheckDetails")
+	public String restaurantreviewReport(@RequestParam(name = "contentId", required = false) String contentId, UReviewReport reviewReport, HttpServletRequest request) {
+		log.info("신고 모달 화면에서 입력받은 data: {}", reviewReport);
+
+		uReviewService.reviewReport(reviewReport);
+		
+		return "redirect:/user/destination/restaurantCheckDetails?contentId=" + contentId;
+	}
+	
+	/**
+	 * 신고작성
+	 * @return
+	 */
+	
+	@PostMapping("tourCheckDetails")
+	public String tourreviewReport(@RequestParam(name = "contentId", required = false) String contentId, UReviewReport reviewReport, HttpServletRequest request) {
+		log.info("신고 모달 화면에서 입력받은 data: {}", reviewReport);
+
+		uReviewService.reviewReport(reviewReport);
+		
+		return "redirect:/user/destination/tourCheckDetails?contentId=" + contentId;
+	}
+	
 	
 	/**
 	 * 숙소
@@ -37,7 +90,7 @@ public class destinationController {
 	 * @throws EDException
 	 */
 	@GetMapping("/lodgingCheck")
-	public String lodgingCheck(Model model) throws EDException {
+	public String lodgingCheck(@RequestParam(name = "contentId", required = false) String contentId, Model model) throws EDException {
 		StringBuilder result = new StringBuilder();
 		
         String serviceKey = "HmjxL3ZwIR9BRISocvJb3ajCyCPzKPzt64QVyJUExpNDFEoSd96yRhkcF6ln23pFPYTSP3v15n23f092lrVAmg=="; // 실제 서비스 키를 입력하세요
@@ -96,7 +149,7 @@ public class destinationController {
 	 * @throws EDException
 	 */
 	@GetMapping("/lodgingCheckDetails")
-	public String lodgingCheckDetails(@RequestParam String contentId, Model model) throws EDException {
+	public String lodgingCheckDetails(@RequestParam(name = "contentId", required = false) String contentId, Model model) throws EDException {
 		
 	StringBuilder result = new StringBuilder();
         
@@ -138,24 +191,39 @@ public class destinationController {
             } else {
                 throw new EDException("API 요청 실패: 응답 코드 " + responseCode);
             }
-            
+
             urlConnection.disconnect();
-            
+
+            // 빈 문자열을 null로 대체
+            String jsonResponse = result.toString();
+            jsonResponse = jsonResponse.replace("\"items\": \"\"", "\"items\": null");
+
             // JSON 응답을 파싱하여 TourItemResponse 객체로 변환
             ObjectMapper mapper = new ObjectMapper();
-            TourInformationResponse tourInformationResponse = mapper.readValue(result.toString(), TourInformationResponse.class);
+            TourInformationResponse tourInformationResponse = mapper.readValue(jsonResponse, TourInformationResponse.class); // 수정
             System.out.println("Parsed Response: " + tourInformationResponse); // 파싱된 응답 로그
 
             // 모델에 TourItem 리스트 추가
-            List<TourInformation> tourInformation = tourInformationResponse.getResponse().getBody().getItems().getInformationList();
+            // 빈 문자열인 경우 빈 리스트 반환
+            List<TourInformation> tourInformation;
+            if (tourInformationResponse.getResponse().getBody().getItems() == null || tourInformationResponse.getResponse().getBody().getItems().getInformationList() == null) {
+                tourInformation = Collections.emptyList();
+            } else {
+                tourInformation = tourInformationResponse.getResponse().getBody().getItems().getInformationList();
+            }
             System.out.println("Tour Information List: " + tourInformation); // TourInformation 리스트 로그
             model.addAttribute("TourInformation", tourInformation);
         } catch (Exception e) {
             e.printStackTrace(); // 예외 스택 트레이스 출력
             throw new EDException("Error occurred while calling the API", e);
         }
+        
+        List<UReivewReportCategory> uReviewReportList = uReviewService.getReviewReportCategory();
+        model.addAttribute("uReviewReportList", uReviewReportList);
+        
         // model에 contentId 추가
         model.addAttribute("contentId", contentId);
+        
 		model.addAttribute("title", "숙소 세부사항");
 		
 		return "user/destination/lodgingCheckDetails";
@@ -171,7 +239,7 @@ public class destinationController {
 	 * @throws EDException
 	 */
 	@GetMapping("/restaurantCheck")
-	public String restaurantCheck(Model model) throws EDException {
+	public String restaurantCheck(@RequestParam(name = "contentId", required = false) String contentId, Model model) throws EDException {
 		
 		StringBuilder result = new StringBuilder();
 		
@@ -236,7 +304,7 @@ public class destinationController {
 	 */
 	
 	@GetMapping("/restaurantCheckDetails")
-	public String restaurantCheckDetails(@RequestParam String contentId, Model model) throws EDException {
+	public String restaurantCheckDetails(@RequestParam(name = "contentId", required = false) String contentId, Model model) throws EDException {
 		StringBuilder result = new StringBuilder();
         
         String serviceKey = "HmjxL3ZwIR9BRISocvJb3ajCyCPzKPzt64QVyJUExpNDFEoSd96yRhkcF6ln23pFPYTSP3v15n23f092lrVAmg=="; // 실제 서비스 키를 입력하세요
@@ -277,22 +345,35 @@ public class destinationController {
             } else {
                 throw new EDException("API 요청 실패: 응답 코드 " + responseCode);
             }
-            
+
             urlConnection.disconnect();
-            
+
+            // 빈 문자열을 null로 대체
+            String jsonResponse = result.toString();
+            jsonResponse = jsonResponse.replace("\"items\": \"\"", "\"items\": null");
+
             // JSON 응답을 파싱하여 TourItemResponse 객체로 변환
             ObjectMapper mapper = new ObjectMapper();
-            TourInformationResponse tourInformationResponse = mapper.readValue(result.toString(), TourInformationResponse.class);
+            TourInformationResponse tourInformationResponse = mapper.readValue(jsonResponse, TourInformationResponse.class); // 수정
             System.out.println("Parsed Response: " + tourInformationResponse); // 파싱된 응답 로그
 
             // 모델에 TourItem 리스트 추가
-            List<TourInformation> tourInformation = tourInformationResponse.getResponse().getBody().getItems().getInformationList();
+            // 빈 문자열인 경우 빈 리스트 반환
+            List<TourInformation> tourInformation;
+            if (tourInformationResponse.getResponse().getBody().getItems() == null || tourInformationResponse.getResponse().getBody().getItems().getInformationList() == null) {
+                tourInformation = Collections.emptyList();
+            } else {
+                tourInformation = tourInformationResponse.getResponse().getBody().getItems().getInformationList();
+            }
             System.out.println("Tour Information List: " + tourInformation); // TourInformation 리스트 로그
             model.addAttribute("TourInformation", tourInformation);
         } catch (Exception e) {
             e.printStackTrace(); // 예외 스택 트레이스 출력
             throw new EDException("Error occurred while calling the API", e);
         }
+        
+        List<UReivewReportCategory> uReviewReportList = uReviewService.getReviewReportCategory();
+        model.addAttribute("uReviewReportList", uReviewReportList);
         
         // model에 contentId 추가
         model.addAttribute("contentId", contentId);
@@ -312,7 +393,7 @@ public class destinationController {
 	 * @throws EDException
 	 */
 	@GetMapping("/tourCheck")
-	public String tourCheck(Model model) throws EDException {
+	public String tourCheck(@RequestParam(name = "contentId", required = false) String contentId, Model model) throws EDException {
 		
 		StringBuilder result = new StringBuilder();
 		
@@ -372,8 +453,9 @@ public class destinationController {
 	 * @throws EDException
 	 */
 	@GetMapping("/tourCheckDetails")
-	public String tourCheckDetails(@RequestParam String contentId, Model model) throws EDException {
-StringBuilder result = new StringBuilder();
+	public String tourCheckDetails(@RequestParam(name = "contentId", required = false) String contentId, Model model) throws EDException {
+
+		StringBuilder result = new StringBuilder();
         
         String serviceKey = "HmjxL3ZwIR9BRISocvJb3ajCyCPzKPzt64QVyJUExpNDFEoSd96yRhkcF6ln23pFPYTSP3v15n23f092lrVAmg=="; // 실제 서비스 키를 입력하세요
         int numOfRows = 100; // 한 페이지당 가져올 항목 수
@@ -413,22 +495,36 @@ StringBuilder result = new StringBuilder();
             } else {
                 throw new EDException("API 요청 실패: 응답 코드 " + responseCode);
             }
-            
+
             urlConnection.disconnect();
-            
+
+            // 빈 문자열을 null로 대체
+            String jsonResponse = result.toString();
+            jsonResponse = jsonResponse.replace("\"items\": \"\"", "\"items\": null");
+
             // JSON 응답을 파싱하여 TourItemResponse 객체로 변환
             ObjectMapper mapper = new ObjectMapper();
-            TourInformationResponse tourInformationResponse = mapper.readValue(result.toString(), TourInformationResponse.class);
+            TourInformationResponse tourInformationResponse = mapper.readValue(jsonResponse, TourInformationResponse.class); // 수정
             System.out.println("Parsed Response: " + tourInformationResponse); // 파싱된 응답 로그
 
             // 모델에 TourItem 리스트 추가
-            List<TourInformation> tourInformation = tourInformationResponse.getResponse().getBody().getItems().getInformationList();
+            // 빈 문자열인 경우 빈 리스트 반환
+            List<TourInformation> tourInformation;
+            if (tourInformationResponse.getResponse().getBody().getItems() == null || tourInformationResponse.getResponse().getBody().getItems().getInformationList() == null) {
+                tourInformation = Collections.emptyList();
+            } else {
+                tourInformation = tourInformationResponse.getResponse().getBody().getItems().getInformationList();
+            }
             System.out.println("Tour Information List: " + tourInformation); // TourInformation 리스트 로그
             model.addAttribute("TourInformation", tourInformation);
         } catch (Exception e) {
             e.printStackTrace(); // 예외 스택 트레이스 출력
             throw new EDException("Error occurred while calling the API", e);
         }
+        
+        List<UReivewReportCategory> uReviewReportList = uReviewService.getReviewReportCategory();
+        model.addAttribute("uReviewReportList", uReviewReportList);
+        
         // model에 contentId 추가
         model.addAttribute("contentId", contentId);
        

@@ -16,6 +16,7 @@ public class PReviewReport {
 	private String reportApproveId; //신고승인자
 	private String reportApproveDate; //신고승인일
 	private int reportTotal; //누적갯수
+	private String contentId; //신고 내용
 	
 	
 	private PReviewReportCategory PReviewReportCategoryInfo;

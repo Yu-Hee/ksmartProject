@@ -103,6 +103,7 @@
 	    	<result property="reviewReportCategoryCode" column="REPT_CTGRY_NO"/>
 	    	<result property="reviewReportCategoryContent" column="REPT_CTGRY_TYPE"/>
 	    	<result property="reviewReportCategoryAction" column="ACT_YN"/>
+	    	<result property="contentId" column="CONTENT_ID"/>
     	</association>
     </resultMap>
     
@@ -221,14 +222,16 @@
 	, PRCHS_REV_CD
 	, REPT_YMD
 	, REV_REPT_APRV
-	, REV_REPT_CN)
+	, REV_REPT_CN
+	, CONTENT_ID)
 	VALUES (#{reviewReportCode}
 	, #{reviewReportUserId}
 	, #{reviewReportCategoryCode}
 	, #{reviewReportReviewCode}
 	, NOW()
 	, 'N'
-	, #{reviewReportContent})
+	, #{reviewReportContent}
+	, #{contentId})
 	</insert>
     
     
