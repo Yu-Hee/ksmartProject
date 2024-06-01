@@ -25,7 +25,7 @@ import ksmart.tourproject.user.destination.dto.TourItem;
 import ksmart.tourproject.user.destination.dto.TourItemResponse;
 import ksmart.tourproject.user.destination.dto.TourList;
 import ksmart.tourproject.user.destination.dto.TourListResponse;
-import ksmart.tourproject.user.review.dto.UReivewReportCategory;
+import ksmart.tourproject.user.review.dto.UReviewReportCategory;
 import ksmart.tourproject.user.review.dto.UReviewReport;
 import ksmart.tourproject.user.review.service.UReviewService;
 import lombok.extern.slf4j.Slf4j;
@@ -218,7 +218,7 @@ private final UReviewService uReviewService;
             throw new EDException("Error occurred while calling the API", e);
         }
         
-        List<UReivewReportCategory> uReviewReportList = uReviewService.getReviewReportCategory();
+        List<UReviewReportCategory> uReviewReportList = uReviewService.getReviewReportCategory();
         model.addAttribute("uReviewReportList", uReviewReportList);
         
         // model에 contentId 추가
@@ -372,7 +372,7 @@ private final UReviewService uReviewService;
             throw new EDException("Error occurred while calling the API", e);
         }
         
-        List<UReivewReportCategory> uReviewReportList = uReviewService.getReviewReportCategory();
+        List<UReviewReportCategory> uReviewReportList = uReviewService.getReviewReportCategory();
         model.addAttribute("uReviewReportList", uReviewReportList);
         
         // model에 contentId 추가
@@ -522,7 +522,7 @@ private final UReviewService uReviewService;
             throw new EDException("Error occurred while calling the API", e);
         }
         
-        List<UReivewReportCategory> uReviewReportList = uReviewService.getReviewReportCategory();
+        List<UReviewReportCategory> uReviewReportList = uReviewService.getReviewReportCategory();
         model.addAttribute("uReviewReportList", uReviewReportList);
         
         // model에 contentId 추가

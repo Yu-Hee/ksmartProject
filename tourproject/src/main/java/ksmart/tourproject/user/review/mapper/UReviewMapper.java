@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.multipart.MultipartFile;
 
 import ksmart.tourproject.user.review.dto.UOpen;
-import ksmart.tourproject.user.review.dto.UReivewReportCategory;
+import ksmart.tourproject.user.review.dto.UReviewReportCategory;
 import ksmart.tourproject.user.review.dto.UReview;
 import ksmart.tourproject.user.review.dto.UReviewComment;
 import ksmart.tourproject.user.review.dto.UReviewFile;
@@ -24,7 +24,7 @@ public interface UReviewMapper {
 	public int deleteFileByIdx(String fileIdx);
 	
 	//리뷰신고카테고리
-	List<UReivewReportCategory> getUReivewReportCategoryList();
+	List<UReviewReportCategory> getUReviewReportCategoryList();
 	//리뷰 조회
 	List<UReview> getUReview();
 	//신고 작성

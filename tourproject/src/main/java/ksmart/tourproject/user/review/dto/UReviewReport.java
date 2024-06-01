@@ -16,5 +16,5 @@ public class UReviewReport {
 	private String contentId; //신고 내용
 	
 	private UReview reviewInfo;
-	private UReivewReportCategory reviewReportCategoryInfo;
+	private UReviewReportCategory reviewReportCategoryInfo;
 }

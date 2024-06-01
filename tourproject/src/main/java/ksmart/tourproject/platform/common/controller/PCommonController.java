@@ -25,7 +25,7 @@ public class PCommonController {
 
     @GetMapping(value={"","/"})
     public String platformLogin(Model model) {
-        model.addAttribute("title", "시금치 관리자 페이지 로그인");
+        model.addAttribute("title", "투어 관리자 페이지 로그인");
         return "platform/common/login";
     }
 }

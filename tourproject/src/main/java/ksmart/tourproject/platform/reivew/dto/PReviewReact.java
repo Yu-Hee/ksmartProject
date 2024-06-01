@@ -1,6 +1,5 @@
 package ksmart.tourproject.platform.reivew.dto;
 
-import ksmart.tourproject.platform.board.dto.PReport;
 import lombok.Data;
 
 @Data
@@ -15,5 +14,5 @@ public class PReviewReact {
 	private String contentId; //좋아요싫어요 기록 번호
 	
 	
-	private PReport reportCate;
+	private PReviewReportCategory pReviewReportCategory;
 }

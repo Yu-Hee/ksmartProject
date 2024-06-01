@@ -19,7 +19,7 @@ public class Breadcrumb {
 		Map<String, String> pageNames = new HashMap<>();
 		pageNames.put("about", "About Us");
 		pageNames.put("contact", "Contact Us");
-		pageNames.put("trip", "여행 계획");
+		pageNames.put("trip", "여행");
 		pageNames.put("plan", "여행 계획 작성");
 		pageNames.put("board", "여행 계획 공유");
 		pageNames.put("allRanking", "여행 추천");

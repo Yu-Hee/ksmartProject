@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import ksmart.tourproject.user.review.dto.UOpen;
-import ksmart.tourproject.user.review.dto.UReivewReportCategory;
+import ksmart.tourproject.user.review.dto.UReviewReportCategory;
 import ksmart.tourproject.user.review.dto.UReview;
 import ksmart.tourproject.user.review.dto.UReviewComment;
 import ksmart.tourproject.user.review.dto.UReviewFile;
@@ -223,8 +223,8 @@ public class UReviewService {
 	/**
 	 * 신고 카테고리 조회
 	 */
-	public List<UReivewReportCategory> getReviewReportCategory(){
-		return uReviewMapper.getUReivewReportCategoryList();
+	public List<UReviewReportCategory> getReviewReportCategory(){
+		return uReviewMapper.getUReviewReportCategoryList();
 	}
 	
 	

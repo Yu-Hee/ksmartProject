@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import ksmart.tourproject.user.review.dto.UReivewReportCategory;
+import ksmart.tourproject.user.review.dto.UReviewReportCategory;
 import ksmart.tourproject.user.review.dto.UReview;
 import ksmart.tourproject.user.review.dto.UReviewComment;
 import ksmart.tourproject.user.review.dto.UReviewFile;
@@ -139,7 +139,7 @@ public class UReviewController {
 		List<UReview> uReviewList = uReviewService.getUReviewList();
 		List<UReviewComment> uReviewCommentList = uReviewService.getUReveiwComment();
 		List<UReviewFile> uReviewFileList = uReviewService.getFileList();
-		List<UReivewReportCategory> uReviewReportList = uReviewService.getReviewReportCategory();
+		List<UReviewReportCategory> uReviewReportList = uReviewService.getReviewReportCategory();
 		
 		//log.info("uReview: {}", uReviewList);
 		//log.info("uReviewCommentList: {}", uReviewCommentList);
